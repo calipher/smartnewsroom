@@ -1,0 +1,123 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper functions for Multi-Tenant Role-Based Access Control
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function getUserData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+    
+    function isPlatformAdmin() {
+      return isSignedIn() && (getUserData().role == 'platform_admin' || request.auth.token.role == 'platform_admin');
+    }
+    
+    function isOrgMember(orgId) {
+      return isSignedIn() && (getUserData().organizationId == orgId || isPlatformAdmin());
+    }
+    
+    function isOrgAdmin(orgId) {
+      return isSignedIn() && (
+        isPlatformAdmin() || 
+        (getUserData().organizationId == orgId && getUserData().role == 'org_admin')
+      );
+    }
+    
+    function isEditor(orgId) {
+      return isSignedIn() && (
+        isPlatformAdmin() || 
+        (getUserData().organizationId == orgId && (
+          getUserData().role in ['org_admin', 'editor_in_chief', 'section_editor']
+        ))
+      );
+    }
+
+    // Platform settings & Audit logs
+    match /platform_settings/{settingId} {
+      allow read, write: if isPlatformAdmin();
+    }
+    
+    match /audit_logs/{logId} {
+      allow read: if isSignedIn() && (isPlatformAdmin() || isOrgAdmin(resource.data.organizationId));
+      allow create: if isSignedIn();
+      allow update, delete: if false; // Immutable audit log
+    }
+
+    // Organisations collection
+    match /organisations/{orgId} {
+      allow read: if isSignedIn() && (isPlatformAdmin() || isOrgMember(orgId));
+      allow create: if isPlatformAdmin();
+      allow update: if isOrgAdmin(orgId);
+      allow delete: if isPlatformAdmin();
+    }
+
+    // Users collection
+    match /users/{userId} {
+      allow read: if isSignedIn();
+      allow create, update: if isPlatformAdmin() || (isSignedIn() && (request.auth.uid == userId || isOrgAdmin(resource.data.organizationId)));
+      allow delete: if isPlatformAdmin();
+    }
+
+    // Departments
+    match /departments/{deptId} {
+      allow read: if isSignedIn() && isOrgMember(resource.data.organizationId);
+      allow create, update, delete: if isOrgAdmin(request.resource.data.organizationId);
+    }
+
+    // Stories and Assignments - Multi-tenant isolation enforced
+    match /stories/{storyId} {
+      allow read: if isSignedIn() && isOrgMember(resource.data.organizationId);
+      allow create: if isSignedIn() && isOrgMember(request.resource.data.organizationId);
+      allow update: if isSignedIn() && isOrgMember(resource.data.organizationId) && (
+        isEditor(resource.data.organizationId) || 
+        resource.data.assignedToUserId == request.auth.uid ||
+        resource.data.authorId == request.auth.uid
+      );
+      allow delete: if isEditor(resource.data.organizationId);
+    }
+
+    // Editorial comments
+    match /editorial_comments/{commentId} {
+      allow read: if isSignedIn() && isOrgMember(resource.data.organizationId);
+      allow create: if isSignedIn() && isOrgMember(request.resource.data.organizationId);
+      allow update, delete: if isEditor(resource.data.organizationId) || request.auth.uid == resource.data.authorId;
+    }
+
+    // Editorial calendar
+    match /editorial_calendar/{calendarId} {
+      allow read: if isSignedIn() && isOrgMember(resource.data.organizationId);
+      allow write: if isEditor(request.resource.data.organizationId);
+    }
+
+    // Media assets
+    match /media_assets/{assetId} {
+      allow read: if isSignedIn() && isOrgMember(resource.data.organizationId);
+      allow write: if isSignedIn() && isOrgMember(request.resource.data.organizationId);
+    }
+
+    // Transcripts & Translations
+    match /transcripts/{transcriptId} {
+      allow read, write: if isSignedIn() && isOrgMember(resource.data.organizationId);
+    }
+    
+    match /translations/{transId} {
+      allow read, write: if isSignedIn() && isOrgMember(resource.data.organizationId);
+    }
+
+    // Publishing records
+    match /publishing_records/{pubId} {
+      allow read: if isSignedIn() && isOrgMember(resource.data.organizationId);
+      allow write: if isEditor(request.resource.data.organizationId);
+    }
+
+    // Notifications
+    match /notifications/{notificationId} {
+      allow read: if isSignedIn() && (resource.data.recipientUserId == request.auth.uid || isPlatformAdmin());
+      allow update: if isSignedIn() && resource.data.recipientUserId == request.auth.uid;
+      allow create: if isSignedIn();
+    }
+  }
+}

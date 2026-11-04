@@ -1,0 +1,8 @@
+{
+  "name": "SmartNewsroom Zimbabwe",
+  "description": "AI-powered newsroom management and journalism assistance platform under the Zimbabwe Media Digital Transformation Programme (ZMDTP).",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

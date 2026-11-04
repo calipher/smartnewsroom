@@ -1,0 +1,1157 @@
+import {
+  Organization,
+  User,
+  Department,
+  Story,
+  MediaAsset,
+  CalendarEvent,
+  NotificationItem,
+  AuditLogItem,
+  TranscriptItem,
+  TranslationItem,
+} from '../types';
+
+export const INITIAL_ORGANIZATIONS: Organization[] = [
+  {
+    id: 'org_byo_digital',
+    name: 'Bulawayo Digital Media',
+    type: 'online_publisher',
+    address: 'Corner 8th Avenue & Jason Moyo Street, Bulawayo CBD',
+    province: 'Bulawayo',
+    city: 'Bulawayo',
+    email: 'newsdesk@byodigital.co.zw',
+    phone: '+263 29 2884100',
+    website: 'https://byodigital.co.zw',
+    status: 'active',
+    createdAt: '2026-01-15T08:00:00Z',
+    settings: {
+      defaultTimezone: 'Africa/Harare',
+      currency: 'USD',
+      aiRetentionAllowed: false,
+      autoArchiveDays: 90,
+    },
+  },
+  {
+    id: 'org_zim_comm_radio',
+    name: 'Zimbabwe Community Radio Network',
+    type: 'community_media',
+    address: 'Fife Street & 10th Avenue, Bulawayo',
+    province: 'Bulawayo',
+    city: 'Bulawayo',
+    email: 'broadcast@zimcommunityradio.org.zw',
+    phone: '+263 29 2773200',
+    website: 'https://zimcommunityradio.org.zw',
+    status: 'active',
+    createdAt: '2026-02-01T09:30:00Z',
+    settings: {
+      defaultTimezone: 'Africa/Harare',
+      currency: 'ZWG',
+      aiRetentionAllowed: false,
+      autoArchiveDays: 60,
+    },
+  },
+  {
+    id: 'org_nat_publishers',
+    name: 'National News Publishers',
+    type: 'newspaper',
+    address: 'Samora Machel Avenue, Harare',
+    province: 'Harare',
+    city: 'Harare',
+    email: 'editorial@natpublishers.co.zw',
+    phone: '+263 24 2704201',
+    website: 'https://nationalnewszim.co.zw',
+    status: 'active',
+    createdAt: '2026-01-10T10:00:00Z',
+    settings: {
+      defaultTimezone: 'Africa/Harare',
+      currency: 'USD',
+      aiRetentionAllowed: false,
+      autoArchiveDays: 120,
+    },
+  },
+];
+
+export const INITIAL_USERS: User[] = [
+  {
+    id: 'user_platform_admin',
+    name: 'Dumisani Moyo',
+    email: 'd.moyo@csz.org.zw',
+    role: 'platform_admin',
+    organizationId: 'org_byo_digital',
+    avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=256&q=80',
+    phone: '+263 77 210 9940',
+    active: true,
+    createdAt: '2026-01-01T00:00:00Z',
+  },
+  {
+    id: 'user_org_admin',
+    name: 'Thandeka Ndlovu',
+    email: 't.ndlovu@byodigital.co.zw',
+    role: 'org_admin',
+    organizationId: 'org_byo_digital',
+    avatarUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=256&q=80',
+    phone: '+263 71 345 8891',
+    active: true,
+    createdAt: '2026-01-15T08:30:00Z',
+  },
+  {
+    id: 'user_editor_in_chief',
+    name: 'Sipho Sibanda',
+    email: 'editor@byodigital.co.zw',
+    role: 'editor_in_chief',
+    organizationId: 'org_byo_digital',
+    avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=256&q=80',
+    phone: '+263 77 400 1234',
+    active: true,
+    createdAt: '2026-01-15T09:00:00Z',
+  },
+  {
+    id: 'user_section_editor',
+    name: 'Ruvimbo Chidzero',
+    email: 'r.chidzero@byodigital.co.zw',
+    role: 'section_editor',
+    organizationId: 'org_byo_digital',
+    departmentId: 'dept_business',
+    avatarUrl: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=256&q=80',
+    phone: '+263 77 555 6789',
+    active: true,
+    createdAt: '2026-01-16T10:00:00Z',
+  },
+  {
+    id: 'user_journalist_1',
+    name: 'Tariro Marange',
+    email: 't.marange@byodigital.co.zw',
+    role: 'journalist',
+    organizationId: 'org_byo_digital',
+    departmentId: 'dept_investigations',
+    avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=256&q=80',
+    phone: '+263 77 890 2231',
+    active: true,
+    createdAt: '2026-01-18T11:00:00Z',
+  },
+  {
+    id: 'user_journalist_2',
+    name: 'Lindiwe Moyo',
+    email: 'l.moyo@byodigital.co.zw',
+    role: 'journalist',
+    organizationId: 'org_byo_digital',
+    departmentId: 'dept_community',
+    avatarUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=256&q=80',
+    phone: '+263 77 344 9900',
+    active: true,
+    createdAt: '2026-01-20T12:00:00Z',
+  },
+  {
+    id: 'user_producer',
+    name: 'Bheki Khumalo',
+    email: 'b.khumalo@byodigital.co.zw',
+    role: 'multimedia_producer',
+    organizationId: 'org_byo_digital',
+    departmentId: 'dept_multimedia',
+    avatarUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=256&q=80',
+    phone: '+263 71 889 0012',
+    active: true,
+    createdAt: '2026-01-22T08:00:00Z',
+  },
+  {
+    id: 'user_viewer',
+    name: 'Farai Matarise',
+    email: 'f.matarise@csz.org.zw',
+    role: 'viewer',
+    organizationId: 'org_byo_digital',
+    avatarUrl: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=256&q=80',
+    phone: '+263 77 111 2233',
+    active: true,
+    createdAt: '2026-01-25T14:00:00Z',
+  },
+  // Secondary Organisation (Zimbabwe Community Radio) users
+  {
+    id: 'user_radio_admin',
+    name: 'Nomsa Ncube',
+    email: 'n.ncube@zimcommunityradio.org.zw',
+    role: 'org_admin',
+    organizationId: 'org_zim_comm_radio',
+    avatarUrl: 'https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&w=256&q=80',
+    phone: '+263 77 321 4455',
+    active: true,
+    createdAt: '2026-02-01T09:00:00Z',
+  },
+  {
+    id: 'user_radio_journalist',
+    name: 'Jabulani Dube',
+    email: 'j.dube@zimcommunityradio.org.zw',
+    role: 'journalist',
+    organizationId: 'org_zim_comm_radio',
+    avatarUrl: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=256&q=80',
+    phone: '+263 77 999 1122',
+    active: true,
+    createdAt: '2026-02-02T10:00:00Z',
+  },
+];
+
+export const INITIAL_DEPARTMENTS: Department[] = [
+  {
+    id: 'dept_investigations',
+    name: 'Investigations',
+    code: 'INV',
+    organizationId: 'org_byo_digital',
+    headUserId: 'user_journalist_1',
+    description: 'In-depth investigative reports, accountability journalism and policy audits.',
+    storyTargetMonthly: 6,
+  },
+  {
+    id: 'dept_business',
+    name: 'Business & Economy',
+    code: 'BUS',
+    organizationId: 'org_byo_digital',
+    headUserId: 'user_section_editor',
+    description: 'Zim financial markets, ZWG currency developments, mining, industry and commerce in Bulawayo.',
+    storyTargetMonthly: 18,
+  },
+  {
+    id: 'dept_politics',
+    name: 'Politics & Governance',
+    code: 'POL',
+    organizationId: 'org_byo_digital',
+    headUserId: 'user_section_editor',
+    description: 'Parliamentary bills, municipal governance, civic elections and electoral reforms.',
+    storyTargetMonthly: 15,
+  },
+  {
+    id: 'dept_community',
+    name: 'Community & Civic Affairs',
+    code: 'COM',
+    organizationId: 'org_byo_digital',
+    headUserId: 'user_journalist_2',
+    description: 'Bulawayo suburbs, health centers, water supply, schools and grassroots civic life.',
+    storyTargetMonthly: 20,
+  },
+  {
+    id: 'dept_tech',
+    name: 'Technology & Innovation',
+    code: 'TECH',
+    organizationId: 'org_byo_digital',
+    headUserId: 'user_journalist_1',
+    description: 'AI, fintech, digital inclusion, universities (NUST) and software startups in Zimbabwe.',
+    storyTargetMonthly: 10,
+  },
+  {
+    id: 'dept_multimedia',
+    name: 'Multimedia & Production',
+    code: 'MEDIA',
+    organizationId: 'org_byo_digital',
+    headUserId: 'user_producer',
+    description: 'Podcasts, video documentaries, photojournalism and radio packages.',
+    storyTargetMonthly: 12,
+  },
+  {
+    id: 'dept_sports',
+    name: 'Sports & Recreation',
+    code: 'SPT',
+    organizationId: 'org_byo_digital',
+    headUserId: 'user_editor_in_chief',
+    description: 'Highlanders FC, Barbourfields matches, Zimbabwe cricket and schools athletics.',
+    storyTargetMonthly: 14,
+  },
+  // Radio org departments
+  {
+    id: 'dept_radio_news',
+    name: 'Radio News & Current Affairs',
+    code: 'RNEWS',
+    organizationId: 'org_zim_comm_radio',
+    headUserId: 'user_radio_admin',
+    description: 'Hourly bulletins in English, isiNdebele and Shona.',
+    storyTargetMonthly: 30,
+  },
+];
+
+export const INITIAL_STORIES: Story[] = [
+  {
+    id: 'story_byo_001',
+    title: 'Bulawayo Industrial Revitalisation: Engineering Firms Record 18% Output Rebound in Belmont',
+    summary: 'A detailed review into Bulawayo’s manufacturing heartland in Belmont and Donnington reveals positive capacity gains following stable power agreements and raw materials incentives.',
+    content: `BULAWAYO — Engineering and heavy industrial firms in Bulawayo's Belmont manufacturing belt are recording their highest plant capacity utilisation since 2021, according to data consolidated by the Confederation of Zimbabwe Industries (CZI) Matabeleland Chapter.
+
+Speaking at the Belmont Industrial Park yesterday, National Railways of Zimbabwe (NRZ) cargo coordinators confirmed a 14% increase in metals and agricultural inputs railed through the city's marshalling yards over the previous quarter.
+
+"The consistency of the dedicated industrial ring-fenced feeder tariff has allowed our foundry lines to operate 24-hour casting cycles without emergency diesel switchovers," explained Mrs. Tendai Mashingaidze, Operations Director at Bulawayo Foundry & Spares Ltd.
+
+However, industry captains caution that access to long-term retooling financing in both USD and Zimbabwe Gold (ZWG) remains the biggest hurdle to full capacity restoration. The Ministry of Industry and Commerce is expected to table an updated National Retooling Window proposal before the Parliamentary Portfolio Committee next Thursday.`,
+    category: 'Business',
+    departmentId: 'dept_business',
+    organizationId: 'org_byo_digital',
+    authorId: 'user_journalist_1',
+    authorName: 'Tariro Marange',
+    assignedToUserId: 'user_journalist_1',
+    assignedToUserName: 'Tariro Marange',
+    assignedEditorId: 'user_section_editor',
+    assignedEditorName: 'Ruvimbo Chidzero',
+    format: 'news_article',
+    priority: 'high',
+    status: 'published',
+    deadline: '2026-10-28T16:00:00Z',
+    scheduledPublishDate: '2026-10-30T06:00:00Z',
+    publishedAt: '2026-10-30T06:30:00Z',
+    publishDestinations: ['Website', 'Facebook', 'WhatsApp Channel', 'Newsletter'],
+    featuredImageUrl: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80',
+    wordCount: 420,
+    tags: ['Bulawayo', 'Industry', 'Economy', 'Belmont', 'CZI'],
+    editorialInstructions: 'Include quotes from CZI Matabeleland leadership and check NRZ freight volume metrics.',
+    createdAt: '2026-10-25T09:00:00Z',
+    updatedAt: '2026-10-30T06:30:00Z',
+    comments: [
+      {
+        id: 'comm_01',
+        storyId: 'story_byo_001',
+        authorId: 'user_section_editor',
+        authorName: 'Ruvimbo Chidzero',
+        authorRole: 'section_editor',
+        content: 'Solid lead and verified freight figures. Headline approved for web lead.',
+        createdAt: '2026-10-29T14:20:00Z',
+      },
+    ],
+  },
+  {
+    id: 'story_byo_002',
+    title: 'NUST AI & Climate-Smart Agriculture Lab Pioneers Drought-Resistant Maize Yield Predictions',
+    summary: 'Researchers at the National University of Science and Technology in Bulawayo have unveiled a satellite-ground predictive model designed to alert Matabeleland smallholders 30 days before acute soil moisture stress.',
+    content: `BULAWAYO — Researchers at the National University of Science and Technology (NUST) Department of Applied Physics and Computer Science have officially deployed their Climate-Smart Predictive Engine across 40 test plots in Umguza and Matobo districts.
+
+The project, spearheaded by Dr. Khanyisile Moyo, integrates Sentinel-2 multispectral imagery with ground-based IoT soil hygrometer arrays deployed across rural demonstration plots.
+
+"Smallholder farmers in drought-prone agro-ecological regions four and five cannot rely on generalized seasonal forecasts," Dr. Moyo explained during an on-campus demonstration. "Our AI pipeline forecasts localized leaf canopy stress and recommends targeted drip irrigation cycles 30 days ahead of visible wilting."
+
+The innovation is part of the Zimbabwe Media Digital Transformation Programme and CSZ tech showcase, which seeks to spotlight home-grown computational solutions to climate challenges.`,
+    category: 'Technology',
+    departmentId: 'dept_tech',
+    organizationId: 'org_byo_digital',
+    authorId: 'user_journalist_1',
+    authorName: 'Tariro Marange',
+    assignedToUserId: 'user_journalist_1',
+    assignedToUserName: 'Tariro Marange',
+    assignedEditorId: 'user_editor_in_chief',
+    assignedEditorName: 'Sipho Sibanda',
+    format: 'feature_article',
+    priority: 'urgent',
+    status: 'approved',
+    deadline: '2026-11-04T12:00:00Z',
+    scheduledPublishDate: '2026-11-05T07:00:00Z',
+    publishDestinations: ['Website', 'X', 'LinkedIn'],
+    featuredImageUrl: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80',
+    wordCount: 510,
+    tags: ['NUST', 'Technology', 'AI', 'Agriculture', 'Bulawayo', 'Climate'],
+    editorialInstructions: 'Verify patent status and grant funding partner details before morning publish.',
+    createdAt: '2026-10-31T10:00:00Z',
+    updatedAt: '2026-11-02T16:00:00Z',
+    comments: [
+      {
+        id: 'comm_02',
+        storyId: 'story_byo_002',
+        authorId: 'user_editor_in_chief',
+        authorName: 'Sipho Sibanda',
+        authorRole: 'editor_in_chief',
+        content: 'Approved for Wednesday morning tech focus. Ensure Shona and isiNdebele summaries are dispatched to the translation desk.',
+        createdAt: '2026-11-02T15:45:00Z',
+      },
+    ],
+  },
+  {
+    id: 'story_byo_003',
+    title: 'Bulawayo Water Distribution: Egodini & Luveve Pipeline Rehabilitation Timeline Revealed',
+    summary: 'City engineers complete testing on 14 kilometres of replacement ductile iron mains, cutting distribution losses in western suburbs from 42% down to 26%.',
+    content: `BULAWAYO — The Bulawayo City Council (BCC) Engineering Services Department has announced the commissioning of the Luveve-Egodini pressurized bypass line, a key capital works milestone intended to curb chronic non-revenue water loss in the western suburbs.
+
+Addressing ward councillors at City Hall on Monday, Town Clerk Mr. Christopher Dube revealed that acoustic leak-detection tests registered a drop in distribution losses from 42% to 26% across the Luveve and Magwegwe feeder grid.
+
+"We have replaced 14 kilometres of aged asbestos-cement piping installed in the late 1960s with modern ductile iron," the Town Clerk stated. "This stabilizes water head pressure to critical municipal clinics and high schools."
+
+Community residents, however, maintain that consistent supply schedules and accurate meter billing must follow the physical works before confidence in municipal services is fully restored.`,
+    category: 'Community Affairs',
+    departmentId: 'dept_community',
+    organizationId: 'org_byo_digital',
+    authorId: 'user_journalist_2',
+    authorName: 'Lindiwe Moyo',
+    assignedToUserId: 'user_journalist_2',
+    assignedToUserName: 'Lindiwe Moyo',
+    assignedEditorId: 'user_section_editor',
+    assignedEditorName: 'Ruvimbo Chidzero',
+    format: 'news_article',
+    priority: 'normal',
+    status: 'under_review',
+    deadline: '2026-11-03T18:00:00Z',
+    scheduledPublishDate: '2026-11-04T08:00:00Z',
+    publishDestinations: ['Website', 'WhatsApp Channel', 'Radio Bulletin'],
+    featuredImageUrl: 'https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&w=1200&q=80',
+    wordCount: 380,
+    tags: ['Bulawayo', 'Water', 'BCC', 'Luveve', 'Community'],
+    editorialInstructions: 'Cross-check water loss figures with the 2025 BCC Annual Engineering Audit Report.',
+    createdAt: '2026-11-01T11:00:00Z',
+    updatedAt: '2026-11-02T19:30:00Z',
+  },
+  {
+    id: 'story_byo_004',
+    title: 'Matabeleland Solar Mini-Grid Expansion: 12 Rural Health Clinics Attain 100% Clean Power',
+    summary: 'The Rural Electrification Agency and partner climate funds complete solar storage installations across Tsholotsho and Bubi districts.',
+    content: `TSHOLOTSHO — Twelve primary healthcare clinics across Tsholotsho and Bubi districts in Matabeleland North have achieved round-the-clock electrification following the commissioning of 45kVA hybrid solar-plus-lithium battery mini-grids.
+
+Sister-in-Charge Nomagugu Khumalo at Sipepa Rural Hospital reported that infant incubators and cold-chain vaccine storage units now operate uninterrupted.
+
+"Prior to the solar commissioning, our staff relied on erratic fuel shipments for a standby generator that frequently broke down during the rainy season," Sister Khumalo stated.
+
+The US$1.2 million clean energy rollout forms part of Zimbabwe’s revised Nationally Determined Contributions (NDCs) aiming for decentralized rural energy resilience.`,
+    category: 'Health',
+    departmentId: 'dept_community',
+    organizationId: 'org_byo_digital',
+    authorId: 'user_journalist_2',
+    authorName: 'Lindiwe Moyo',
+    assignedToUserId: 'user_journalist_2',
+    assignedToUserName: 'Lindiwe Moyo',
+    assignedEditorId: 'user_section_editor',
+    assignedEditorName: 'Ruvimbo Chidzero',
+    format: 'radio_bulletin',
+    priority: 'normal',
+    status: 'revision_required',
+    deadline: '2026-11-03T14:00:00Z',
+    featuredImageUrl: 'https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=1200&q=80',
+    wordCount: 310,
+    tags: ['Solar', 'Health', 'Matabeleland', 'Tsholotsho', 'Energy'],
+    editorialInstructions: 'Please obtain official confirmation from the Provincial Medical Directorate regarding vaccine refrigeration temperatures.',
+    createdAt: '2026-10-30T14:00:00Z',
+    updatedAt: '2026-11-02T11:15:00Z',
+    comments: [
+      {
+        id: 'comm_04',
+        storyId: 'story_byo_004',
+        authorId: 'user_section_editor',
+        authorName: 'Ruvimbo Chidzero',
+        authorRole: 'section_editor',
+        isRevisionRequest: true,
+        content: 'Good angle, but need specific confirmation from PMD Dr. Sibindi regarding the refrigerated vaccine inventory.',
+        createdAt: '2026-11-02T11:15:00Z',
+      },
+    ],
+  },
+  {
+    id: 'story_byo_005',
+    title: 'Investigative Dispatch: Procurement Irregularities at Western Province Road Resurfacing Tender',
+    summary: 'Leaked tender evaluation sheets reveal non-compliant bidding consortium awarded US$4.8 million asphalt overlay contract without mandatory ZIDA performance guarantees.',
+    content: `INVESTIGATIVE DESK — Confidential bid evaluation scorecards and auditor memoranda obtained by SmartNewsroom Zimbabwe point to severe irregularities in the awarding of the Bulawayo-Nkayi Road rehabilitation Phase III tender.
+
+According to procurement oversight files marked "Confidential / Bids Committee", the winning joint venture had failed mandatory technical compliance tests regarding bitumen compaction machinery and possessed no active tax clearance certificates at the tender closing date.
+
+Two competing domestic engineering contractors who lodged formal objections with the Procurement Regulatory Authority of Zimbabwe (PRAZ) allege that their appeals were dismissed without written justification.
+
+When contacted for comment, the provincial roads engineer declined an in-person interview, citing pending tribunal deliberations. PRAZ officials stated that an independent verification panel has now been instituted to review the dossier.`,
+    category: 'Investigations',
+    departmentId: 'dept_investigations',
+    organizationId: 'org_byo_digital',
+    authorId: 'user_journalist_1',
+    authorName: 'Tariro Marange',
+    assignedToUserId: 'user_journalist_1',
+    assignedToUserName: 'Tariro Marange',
+    assignedEditorId: 'user_editor_in_chief',
+    assignedEditorName: 'Sipho Sibanda',
+    format: 'investigative_report',
+    priority: 'urgent',
+    status: 'in_progress',
+    deadline: '2026-11-07T17:00:00Z',
+    featuredImageUrl: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1200&q=80',
+    wordCount: 460,
+    tags: ['Investigations', 'PRAZ', 'Tender', 'Roads', 'Accountability'],
+    editorialInstructions: 'Ensure legal counsel reviews all source document extracts before any name or company is referenced in public draft.',
+    createdAt: '2026-11-01T08:00:00Z',
+    updatedAt: '2026-11-02T18:00:00Z',
+  },
+  {
+    id: 'story_byo_006',
+    title: 'Highlanders FC Academy Talent Surge: Five Bulawayo Youths Scouted for COSAFA Under-20 Squad',
+    summary: 'The Bosso youth pipeline proves its pedigree again as national selectors name five Barbourfields trainees ahead of the regional tournament in Maputo.',
+    content: `BULAWAYO — The resurgence of Highlanders Football Club's storied junior development system has borne immediate fruit with the national technical panel calling up five Barbourfields trainees for the upcoming COSAFA Under-20 Championship camp.
+
+Head of Youth Development Melusi 'Mabaleka' Sibanda commended the club's board for preserving training grants despite economic headwinds.
+
+"We concentrate on technical agility and tactical discipline from under-13," Sibanda told SmartNewsroom sports desk. "Seeing them earn national colors vindicates Bulawayo's football legacy."
+
+The squad will undergo a 10-day high-altitude camp at Luveve Stadium before flying out to Mozambique.`,
+    category: 'Sports',
+    departmentId: 'dept_sports',
+    organizationId: 'org_byo_digital',
+    authorId: 'user_journalist_2',
+    authorName: 'Lindiwe Moyo',
+    assignedToUserId: 'user_journalist_2',
+    assignedToUserName: 'Lindiwe Moyo',
+    assignedEditorId: 'user_editor_in_chief',
+    assignedEditorName: 'Sipho Sibanda',
+    format: 'news_article',
+    priority: 'normal',
+    status: 'submitted',
+    deadline: '2026-11-03T16:00:00Z',
+    featuredImageUrl: 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1200&q=80',
+    wordCount: 290,
+    tags: ['Highlanders FC', 'Sports', 'Barbourfields', 'COSAFA', 'Football'],
+    editorialInstructions: 'Include the full list of named players and their home suburbs in Makokoba, Mzilikazi, and Luveve.',
+    createdAt: '2026-11-02T10:00:00Z',
+    updatedAt: '2026-11-02T17:20:00Z',
+  },
+  {
+    id: 'story_byo_007',
+    title: 'Reserve Bank ZWG Exchange Rate Mechanism: Impact Assessment on Small Traders in Matabeleland',
+    summary: 'A field survey of 150 informal grocery and textile stalls across Renkini Bus Terminus and Bulawayo Flea Markets evaluates point-of-sale card acceptance and electronic payments stability.',
+    content: `BULAWAYO — Seven months into the consolidation of the Zimbabwe Gold (ZWG) structured currency, informal cross-border traders and tuckshop operators across Renkini Long Distance Bus Terminus in Bulawayo report rising point-of-sale terminal usage, even as dual-pricing pressures persist.
+
+Data gathered in a collaborative newsroom survey reveals that 68% of stallholders now accept electronic swipe transactions, up from 34% in mid-2024.
+
+"The real test is wholesale restocking," noted Mr. Philemon Ncube, who operates a dry goods outlet near Renkini. "When millers and edible oil producers accept electronic payment at official rates without adding a premium, our shelf prices remain stable."
+
+Economists at NUST have called for deeper market-making liquidity to ensure that small businesses can convert currency seamlessly for regional cross-border imports.`,
+    category: 'Business',
+    departmentId: 'dept_business',
+    organizationId: 'org_byo_digital',
+    authorId: 'user_journalist_1',
+    authorName: 'Tariro Marange',
+    assignedToUserId: 'user_journalist_1',
+    assignedToUserName: 'Tariro Marange',
+    assignedEditorId: 'user_section_editor',
+    assignedEditorName: 'Ruvimbo Chidzero',
+    format: 'news_article',
+    priority: 'high',
+    status: 'scheduled',
+    deadline: '2026-11-04T10:00:00Z',
+    scheduledPublishDate: '2026-11-04T07:00:00Z',
+    publishDestinations: ['Website', 'Facebook', 'LinkedIn'],
+    featuredImageUrl: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=1200&q=80',
+    wordCount: 395,
+    tags: ['ZWG', 'Economy', 'RBZ', 'Bulawayo', 'Business', 'Currency'],
+    editorialInstructions: 'Check central bank statutory instrument references before final publication.',
+    createdAt: '2026-10-29T11:00:00Z',
+    updatedAt: '2026-11-02T16:00:00Z',
+  },
+  {
+    id: 'story_byo_008',
+    title: 'Bulawayo Arts & Culture: Intwasa Extra Festival Celebrates IsiNdebele Poetry and Digital Media Arts',
+    summary: 'Hundreds gather at the National Gallery of Zimbabwe in Bulawayo as youth poets, playwrights, and VR artists showcase new works.',
+    content: `BULAWAYO — The historic red-brick courtyard of the National Gallery of Zimbabwe in Bulawayo transformed into an electric amphitheater over the weekend as the Intwasa Extra Festival brought together performers, spoken-word poets, and digital sound designers.
+
+The showcase placed special emphasis on contemporary isiNdebele verse and multimedia storytelling, supported by the Zimbabwe Media Digital Transformation Programme.
+
+Celebrated poet Sithandazile Dube performed to a standing ovation with a searing commentary on migration, memory, and youth entrepreneurship in the City of Kings.
+
+"Our languages are not historical museum artifacts," declared festival curator Raisedon Baya. "They are vibrant, expanding digital mediums capable of commanding global stages."`,
+    category: 'Entertainment',
+    departmentId: 'dept_arts',
+    organizationId: 'org_byo_digital',
+    authorId: 'user_journalist_2',
+    authorName: 'Lindiwe Moyo',
+    assignedToUserId: 'user_journalist_2',
+    assignedToUserName: 'Lindiwe Moyo',
+    assignedEditorId: 'user_editor_in_chief',
+    assignedEditorName: 'Sipho Sibanda',
+    format: 'feature_article',
+    priority: 'low',
+    status: 'published',
+    deadline: '2026-10-26T17:00:00Z',
+    scheduledPublishDate: '2026-10-27T08:00:00Z',
+    publishedAt: '2026-10-27T08:15:00Z',
+    publishDestinations: ['Website', 'Instagram', 'Facebook'],
+    featuredImageUrl: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1200&q=80',
+    wordCount: 340,
+    tags: ['Arts', 'Intwasa', 'Culture', 'Bulawayo', 'isiNdebele', 'Poetry'],
+    createdAt: '2026-10-24T14:00:00Z',
+    updatedAt: '2026-10-27T08:15:00Z',
+  },
+  {
+    id: 'story_byo_009',
+    title: 'Proposed: Smart Urban Transport: E-Bus Pilot Corridor along Khami Road',
+    summary: 'Proposal to investigate the feasibility, charging infrastructure and commuter tariff modeling for Bulawayo City Council’s envisioned electric bus corridor.',
+    content: `EDITORIAL PITCH / PROPOSAL:
+With the rapid increase in commuter omnibuses (kombis) and rising fossil fuel costs, the Bulawayo City Council and private transit operators have initiated feasibility talks regarding an electrified bus rapid pilot along the Khami Road route from Pumula to the City Hall rank.
+
+This story will investigate:
+1. Proposed charging depot locations near Belmont industrial substations.
+2. Estimated commuter fares versus existing kombi pricing.
+3. Interviews with Bulawayo Public Transport Association (BUPTA) representatives.
+4. Independent engineering assessments on grid capacity from ZETDC.`,
+    category: 'Technology',
+    departmentId: 'dept_tech',
+    organizationId: 'org_byo_digital',
+    authorId: 'user_journalist_1',
+    authorName: 'Tariro Marange',
+    format: 'news_article',
+    priority: 'normal',
+    status: 'proposed',
+    deadline: '2026-11-12T12:00:00Z',
+    featuredImageUrl: 'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?auto=format&fit=crop&w=1200&q=80',
+    wordCount: 160,
+    tags: ['Transport', 'EV', 'Bulawayo', 'Khami Road', 'Energy'],
+    editorialInstructions: 'Awaiting editorial board greenlight at Monday morning conference.',
+    createdAt: '2026-11-02T14:00:00Z',
+    updatedAt: '2026-11-02T14:00:00Z',
+  },
+  {
+    id: 'story_byo_010',
+    title: 'Assigned: Special Economic Zones in Umvumila: Investor Commitments and Factory Construction Status',
+    summary: 'Assignment to verify factory shell construction and foreign direct investment declarations at the Umvumila Special Economic Zone outside Bulawayo.',
+    content: `ASSIGNMENT BRIEF:
+Journalist assigned: Tariro Marange
+Editor: Ruvimbo Chidzero
+
+Key focus areas:
+- Visit Umvumila SEZ site along the airport road.
+- Verify whether the 8 promised textile and light assembly manufacturing tenants have commenced earthworks.
+- Interview the Zimbabwe Investment and Development Agency (ZIDA) regional liaison officer in Bulawayo.
+- Deadline: Friday 6 November 2026 at 15:00.`,
+    category: 'Business',
+    departmentId: 'dept_business',
+    organizationId: 'org_byo_digital',
+    authorId: 'user_section_editor',
+    authorName: 'Ruvimbo Chidzero',
+    assignedToUserId: 'user_journalist_1',
+    assignedToUserName: 'Tariro Marange',
+    assignedEditorId: 'user_section_editor',
+    assignedEditorName: 'Ruvimbo Chidzero',
+    format: 'investigative_report',
+    priority: 'high',
+    status: 'assigned',
+    deadline: '2026-11-06T15:00:00Z',
+    featuredImageUrl: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80',
+    wordCount: 140,
+    tags: ['SEZ', 'Business', 'Umvumila', 'Investment', 'ZIDA'],
+    editorialInstructions: 'Take high-res drone or on-ground photos of site progress.',
+    createdAt: '2026-11-02T08:30:00Z',
+    updatedAt: '2026-11-02T08:30:00Z',
+  },
+  {
+    id: 'story_byo_011',
+    title: 'Archived: Victoria Falls Eco-Tourism Certification Review 2025',
+    summary: 'Historical assessment of hospitality green certifications along the Zambezi River national park boundaries.',
+    content: `VICTORIA FALLS — A comprehensive review of eco-tourism operators across the resort city indicates 89% compliance with low-impact single-use plastic elimination standards.
+
+Hoteliers and tour operators along the Zambezi River corridor have implemented comprehensive solar water heating and rainwater harvesting systems.`,
+    category: 'Business',
+    departmentId: 'dept_business',
+    organizationId: 'org_byo_digital',
+    authorId: 'user_journalist_1',
+    authorName: 'Tariro Marange',
+    format: 'feature_article',
+    priority: 'low',
+    status: 'archived',
+    deadline: '2025-11-15T12:00:00Z',
+    publishedAt: '2025-11-18T10:00:00Z',
+    wordCount: 220,
+    tags: ['Victoria Falls', 'Tourism', 'Ecology', 'Archived'],
+    createdAt: '2025-11-10T08:00:00Z',
+    updatedAt: '2025-12-01T10:00:00Z',
+  },
+  // Additional rich stories for different formats:
+  {
+    id: 'story_byo_012',
+    title: 'Podcast Episode 14: "Sound of the City" - The Oral Historians of Old Luveve and Makokoba',
+    summary: 'A 28-minute audio documentary capturing memories of township jazz, community boxing rings, and literary movements in Bulawayo’s oldest suburbs.',
+    content: `MULTIMEDIA PACKAGE - AUDIO DOCUMENTARY:
+Episode 14 of "Sound of the City" features interviews with veteran musicians, retired boxing trainers from Makokoba Gym, and archivist Pathisa Nyathi's associates.
+
+Produced and mixed by Bheki Khumalo in the SmartNewsroom Audio Studio. Complete with ambient township soundscape, acoustic guitar interludes, and full bilingual transcripts in isiNdebele and English.`,
+    category: 'Multimedia',
+    departmentId: 'dept_multimedia',
+    organizationId: 'org_byo_digital',
+    authorId: 'user_producer',
+    authorName: 'Bheki Khumalo',
+    assignedToUserId: 'user_producer',
+    assignedToUserName: 'Bheki Khumalo',
+    assignedEditorId: 'user_editor_in_chief',
+    assignedEditorName: 'Sipho Sibanda',
+    format: 'podcast',
+    priority: 'normal',
+    status: 'approved',
+    deadline: '2026-11-05T14:00:00Z',
+    scheduledPublishDate: '2026-11-06T10:00:00Z',
+    publishDestinations: ['Website', 'WhatsApp Channel'],
+    featuredImageUrl: 'https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&w=1200&q=80',
+    wordCount: 185,
+    tags: ['Podcast', 'Culture', 'Makokoba', 'Luveve', 'History'],
+    createdAt: '2026-10-31T15:00:00Z',
+    updatedAt: '2026-11-02T17:00:00Z',
+  },
+  {
+    id: 'story_byo_013',
+    title: 'Radio Bulletin: Morning News Rundown for Matabeleland Stations (07:00 Edition)',
+    summary: 'Tight 3-minute broadcast script featuring road alerts, weather outlook, exchange rates, and school term resumption notices.',
+    content: `BROADCAST SCRIPT - 07:00 BULLETIN
+STATION: Bulawayo Digital Audio Feed / Partner Stations
+ANCHOR: Ruvimbo Chidzero
+
+[CUE INTRO JINGLE - 0:03]
+
+ANCHOR: Good morning, this is the SmartNewsroom Zimbabwe Matabeleland morning bulletin for Tuesday the 3rd of November 2026.
+
+[HEADLINE 1]
+Heavy engineering firms in Belmont report an 18 percent rebound in production output as power stability takes hold.
+
+[HEADLINE 2]
+Bulawayo City Council completes testing on the Luveve-Egodini water pipeline, promising reduced losses for western suburbs.
+
+[HEADLINE 3]
+And in sports, five young talents from Highlanders FC make the provisional national under-20 COSAFA squad.
+
+[DETAILS]
+Full details on these stories and your morning weather on byodigital.co.zw. I am Ruvimbo Chidzero, have a productive day in the City of Kings.
+
+[OUTRO JINGLE - 0:04]`,
+    category: 'News',
+    departmentId: 'dept_multimedia',
+    organizationId: 'org_byo_digital',
+    authorId: 'user_section_editor',
+    authorName: 'Ruvimbo Chidzero',
+    assignedToUserId: 'user_section_editor',
+    assignedToUserName: 'Ruvimbo Chidzero',
+    assignedEditorId: 'user_editor_in_chief',
+    assignedEditorName: 'Sipho Sibanda',
+    format: 'radio_bulletin',
+    priority: 'urgent',
+    status: 'published',
+    deadline: '2026-11-03T06:30:00Z',
+    publishedAt: '2026-11-03T07:00:00Z',
+    publishDestinations: ['Radio Bulletin', 'WhatsApp Channel'],
+    wordCount: 190,
+    tags: ['Radio', 'Broadcast', 'Morning Bulletin', 'Bulawayo'],
+    createdAt: '2026-11-03T05:30:00Z',
+    updatedAt: '2026-11-03T07:00:00Z',
+  },
+  {
+    id: 'story_byo_014',
+    title: 'Television Report: Inside the Mpilo Central Hospital Pediatric Oncology Ward Upgrades',
+    summary: 'A 4-minute video package examining new diagnostic equipment donations, parental lodging facilities, and nurse specialist training at Bulawayo’s major referral center.',
+    content: `TV PACKAGE RUNDOWN:
+TITLE: Hope at Mpilo: Pediatric Cancer Care Upgrades
+REPORTER: Lindiwe Moyo
+CAMERAMAN & EDITOR: Bheki Khumalo
+
+[00:00 - 00:20] ESTABLISHING SHOTS: Exterior of Mpilo Central Hospital, sunrise over grounds, nurse arrivals.
+[00:20 - 01:15] INTERVIEW: Dr. S. Sibindi, Consultant Pediatrician, explaining the newly installed flow-cytometry diagnostic machine funded through the Zimbabwe Healthcare Trust.
+[00:15 - 02:30] B-ROLL & PARENT VOX POPS: Mothers from Gwanda and Hwange sharing relief over subsidized lodging beds on hospital grounds.
+[02:30 - 03:45] PIECE TO CAMERA: Lindiwe Moyo summarizing ongoing pharmaceutical stock levels and calling for continued blood bank donor drives.
+[03:45 - 04:00] GRAPHICS & OUTRO: Donation contact hotline and ZMC broadcast credentials.`,
+    category: 'Health',
+    departmentId: 'dept_community',
+    organizationId: 'org_byo_digital',
+    authorId: 'user_journalist_2',
+    authorName: 'Lindiwe Moyo',
+    assignedToUserId: 'user_producer',
+    assignedToUserName: 'Bheki Khumalo',
+    assignedEditorId: 'user_editor_in_chief',
+    assignedEditorName: 'Sipho Sibanda',
+    format: 'tv_report',
+    priority: 'normal',
+    status: 'in_progress',
+    deadline: '2026-11-08T16:00:00Z',
+    featuredImageUrl: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80',
+    wordCount: 220,
+    tags: ['Mpilo Hospital', 'Health', 'Bulawayo', 'Television', 'Cancer Care'],
+    createdAt: '2026-11-01T14:00:00Z',
+    updatedAt: '2026-11-02T15:30:00Z',
+  },
+  {
+    id: 'story_byo_015',
+    title: 'Opinion: Digital Leapfrogging - Why Artificial Intelligence Belongs in Zimbabwean Newsrooms',
+    summary: 'A perspective piece on how local language NLP, automated transcription, and verification algorithms empower regional journalists rather than replacing them.',
+    content: `OPINION / EDITORIAL ANALYSIS:
+By Sipho Sibanda, Editor-in-Chief
+
+For decades, the narrative surrounding digital media disruption in the Global South was defined by defensive adaptation. We worried about shrinking print runs, advertising flight to foreign algorithmic platforms, and severe constraints on reporting travel budgets.
+
+Yet under the Zimbabwe Media Digital Transformation Programme (ZMDTP), piloted right here in Bulawayo with the support of the Computer Society of Zimbabwe, a radically different vision is taking shape.
+
+When a reporter covering a community council session in Cowdray Park or a farmer dialogue in Tsholotsho can instantly transcribe hours of isiNdebele and Shona audio recordings into searchable text, editorial efficiency does not merely double — investigative depth deepens.
+
+Crucially, AI is our assistant, not our journalist. The judgment to verify source integrity, verify public expenditure, and uphold the Zimbabwe Media Commission's ethical code remains an exclusively human covenant.`,
+    category: 'Technology',
+    departmentId: 'dept_tech',
+    organizationId: 'org_byo_digital',
+    authorId: 'user_editor_in_chief',
+    authorName: 'Sipho Sibanda',
+    assignedToUserId: 'user_editor_in_chief',
+    assignedToUserName: 'Sipho Sibanda',
+    format: 'opinion_piece',
+    priority: 'normal',
+    status: 'published',
+    deadline: '2026-10-29T12:00:00Z',
+    scheduledPublishDate: '2026-10-31T08:00:00Z',
+    publishedAt: '2026-10-31T08:00:00Z',
+    publishDestinations: ['Website', 'LinkedIn', 'Newsletter'],
+    featuredImageUrl: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=1200&q=80',
+    wordCount: 450,
+    tags: ['Opinion', 'ZMDTP', 'CSZ', 'AI', 'Journalism', 'Ethics'],
+    createdAt: '2026-10-28T10:00:00Z',
+    updatedAt: '2026-10-31T08:00:00Z',
+  },
+  // Sample story in second organisation to prove multi-tenancy isolation
+  {
+    id: 'story_radio_001',
+    title: 'Community Radio Field Dispatch: Matobo Rural Water Points and Livestock Dip Tanks',
+    summary: 'A community bulletin on dip tank chemical availability and borehole solarization in Matobo district.',
+    content: `MATOBO — Community livestock committees in Ward 4 have reported improved tick control following timely delivery of dip chemicals.
+
+Broadcasting in isiNdebele on 98.4 FM, local elders commended the Department of Veterinary Services for proactive livestock health measures.`,
+    category: 'Community Affairs',
+    departmentId: 'dept_radio_news',
+    organizationId: 'org_zim_comm_radio',
+    authorId: 'user_radio_journalist',
+    authorName: 'Jabulani Dube',
+    assignedToUserId: 'user_radio_journalist',
+    assignedToUserName: 'Jabulani Dube',
+    format: 'radio_bulletin',
+    priority: 'high',
+    status: 'published',
+    deadline: '2026-11-01T10:00:00Z',
+    publishedAt: '2026-11-01T12:00:00Z',
+    publishDestinations: ['Radio Bulletin'],
+    wordCount: 180,
+    tags: ['Matobo', 'Livestock', 'Community Radio'],
+    createdAt: '2026-10-30T09:00:00Z',
+    updatedAt: '2026-11-01T12:00:00Z',
+  },
+];
+
+export const INITIAL_MEDIA_ASSETS: MediaAsset[] = [
+  {
+    id: 'media_01',
+    name: 'Belmont_Engineering_Plant_HighRes.jpg',
+    type: 'image',
+    url: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80',
+    size: '3.4 MB',
+    organizationId: 'org_byo_digital',
+    departmentId: 'dept_business',
+    storyId: 'story_byo_001',
+    uploadedByUserId: 'user_journalist_1',
+    uploadedByUserName: 'Tariro Marange',
+    description: 'Foundry floor casting lines at Belmont industrial park in Bulawayo.',
+    tags: ['Belmont', 'Foundry', 'Bulawayo', 'Industry'],
+    createdAt: '2026-10-26T11:20:00Z',
+  },
+  {
+    id: 'media_02',
+    name: 'NUST_Predictive_Engine_Demo.mp4',
+    type: 'video',
+    url: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80',
+    size: '42.8 MB',
+    duration: '03:45',
+    organizationId: 'org_byo_digital',
+    departmentId: 'dept_tech',
+    storyId: 'story_byo_002',
+    uploadedByUserId: 'user_producer',
+    uploadedByUserName: 'Bheki Khumalo',
+    description: 'Video walkthrough of satellite IoT crop prediction dashboard at NUST lab.',
+    tags: ['NUST', 'Video', 'Climate AI', 'Agriculture'],
+    createdAt: '2026-11-01T16:00:00Z',
+  },
+  {
+    id: 'media_03',
+    name: 'Town_Clerk_Interview_Luveve_Water.wav',
+    type: 'audio',
+    url: 'https://assets.mixkit.co/active_storage/sfx/2874/2874-preview.mp3',
+    size: '18.2 MB',
+    duration: '14:20',
+    organizationId: 'org_byo_digital',
+    departmentId: 'dept_community',
+    storyId: 'story_byo_003',
+    uploadedByUserId: 'user_journalist_2',
+    uploadedByUserName: 'Lindiwe Moyo',
+    description: 'Raw audio recording of press briefing with BCC Town Clerk Christopher Dube.',
+    tags: ['Audio', 'Interview', 'BCC', 'Water'],
+    createdAt: '2026-11-01T12:00:00Z',
+  },
+  {
+    id: 'media_04',
+    name: 'Bulawayo_Water_Loss_Audit_Q3_2026.pdf',
+    type: 'document',
+    url: '#',
+    size: '2.1 MB',
+    organizationId: 'org_byo_digital',
+    departmentId: 'dept_community',
+    storyId: 'story_byo_003',
+    uploadedByUserId: 'user_section_editor',
+    uploadedByUserName: 'Ruvimbo Chidzero',
+    description: 'Official BCC Engineering Committee quarterly non-revenue water report.',
+    tags: ['Document', 'Audit', 'BCC', 'PDF'],
+    createdAt: '2026-10-31T09:40:00Z',
+  },
+  {
+    id: 'media_05',
+    name: 'Highlanders_Youth_Camp_Barbourfields.jpg',
+    type: 'image',
+    url: 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1200&q=80',
+    size: '4.8 MB',
+    organizationId: 'org_byo_digital',
+    departmentId: 'dept_sports',
+    storyId: 'story_byo_006',
+    uploadedByUserId: 'user_producer',
+    uploadedByUserName: 'Bheki Khumalo',
+    description: 'Highlanders under-20 academy players in sprint drills at Barbourfields.',
+    tags: ['Highlanders', 'Sports', 'Barbourfields', 'Bosso'],
+    createdAt: '2026-11-02T11:00:00Z',
+  },
+];
+
+export const INITIAL_CALENDAR_EVENTS: CalendarEvent[] = [
+  {
+    id: 'cal_01',
+    title: 'Morning Editorial Conference & Pitch Review',
+    organizationId: 'org_byo_digital',
+    type: 'editorial_meeting',
+    date: '2026-11-03',
+    time: '08:30',
+    description: 'Daily newsroom pitch review with section editors and desk heads.',
+    priority: 'high',
+  },
+  {
+    id: 'cal_02',
+    title: 'Deadline: Luveve Pipeline Final BCC Fact-Check',
+    organizationId: 'org_byo_digital',
+    type: 'deadline',
+    date: '2026-11-03',
+    time: '18:00',
+    storyId: 'story_byo_003',
+    departmentId: 'dept_community',
+    assignedUserId: 'user_journalist_2',
+    priority: 'normal',
+  },
+  {
+    id: 'cal_03',
+    title: 'Publication: NUST Climate AI Feature Live Release',
+    organizationId: 'org_byo_digital',
+    type: 'publication',
+    date: '2026-11-05',
+    time: '07:00',
+    storyId: 'story_byo_002',
+    departmentId: 'dept_tech',
+    assignedUserId: 'user_journalist_1',
+    priority: 'urgent',
+  },
+  {
+    id: 'cal_04',
+    title: 'Special Event: Zimbabwe Media Digital Transformation Showcase (Bulawayo Hub)',
+    organizationId: 'org_byo_digital',
+    type: 'special_event',
+    date: '2026-11-06',
+    time: '10:00',
+    description: 'CSZ presentation to media houses, university journalism faculties and stakeholders.',
+    priority: 'high',
+  },
+  {
+    id: 'cal_05',
+    title: 'Deadline: Umvumila SEZ Ground Investigation Filing',
+    organizationId: 'org_byo_digital',
+    type: 'deadline',
+    date: '2026-11-06',
+    time: '15:00',
+    storyId: 'story_byo_010',
+    departmentId: 'dept_business',
+    assignedUserId: 'user_journalist_1',
+    priority: 'high',
+  },
+  {
+    id: 'cal_06',
+    title: 'Weekly Production Rundown: Podcasts & Radio Syndication',
+    organizationId: 'org_byo_digital',
+    type: 'editorial_meeting',
+    date: '2026-11-07',
+    time: '14:00',
+    description: 'Review studio audio packages and syndication schedule for weekend listeners.',
+    priority: 'normal',
+  },
+];
+
+export const INITIAL_NOTIFICATIONS: NotificationItem[] = [
+  {
+    id: 'notif_01',
+    organizationId: 'org_byo_digital',
+    recipientUserId: 'user_journalist_1',
+    title: 'Story Approved by Editor-in-Chief',
+    message: 'Your feature "NUST AI & Climate-Smart Agriculture Lab" has been approved for publication.',
+    type: 'approval',
+    storyId: 'story_byo_002',
+    read: false,
+    createdAt: '2026-11-02T16:05:00Z',
+  },
+  {
+    id: 'notif_02',
+    organizationId: 'org_byo_digital',
+    recipientUserId: 'user_journalist_2',
+    title: 'Revision Requested on Solar Mini-Grid Dispatch',
+    message: 'Editor Ruvimbo Chidzero requested verification of vaccine storage cold-chain temperatures.',
+    type: 'revision',
+    storyId: 'story_byo_004',
+    read: false,
+    createdAt: '2026-11-02T11:16:00Z',
+  },
+  {
+    id: 'notif_03',
+    organizationId: 'org_byo_digital',
+    recipientUserId: 'user_editor_in_chief',
+    title: 'New Story Submission: Highlanders Academy',
+    message: 'Lindiwe Moyo submitted "Highlanders FC Academy Talent Surge" for editorial review.',
+    type: 'submission',
+    storyId: 'story_byo_006',
+    read: true,
+    createdAt: '2026-11-02T17:21:00Z',
+  },
+  {
+    id: 'notif_04',
+    organizationId: 'org_byo_digital',
+    recipientUserId: 'user_journalist_1',
+    title: 'New Assignment: Umvumila SEZ Investigation',
+    message: 'You have been assigned to cover factory construction progress at the Umvumila Special Economic Zone.',
+    type: 'assignment',
+    storyId: 'story_byo_010',
+    read: true,
+    createdAt: '2026-11-02T08:31:00Z',
+  },
+];
+
+export const INITIAL_AUDIT_LOGS: AuditLogItem[] = [
+  {
+    id: 'audit_01',
+    organizationId: 'org_byo_digital',
+    userId: 'user_editor_in_chief',
+    userName: 'Sipho Sibanda',
+    userRole: 'editor_in_chief',
+    action: 'APPROVED_STORY',
+    entityType: 'story',
+    entityId: 'story_byo_002',
+    entityTitle: 'NUST AI & Climate-Smart Agriculture Lab',
+    details: 'Approved story content following technical verification of NUST patent claims.',
+    timestamp: '2026-11-02T16:00:00Z',
+  },
+  {
+    id: 'audit_02',
+    organizationId: 'org_byo_digital',
+    userId: 'user_section_editor',
+    userName: 'Ruvimbo Chidzero',
+    userRole: 'section_editor',
+    action: 'REQUESTED_REVISION',
+    entityType: 'story',
+    entityId: 'story_byo_004',
+    entityTitle: 'Matabeleland Solar Mini-Grid Expansion',
+    details: 'Flagged missing temperature telemetry from Tsholotsho medical directorate.',
+    timestamp: '2026-11-02T11:15:00Z',
+  },
+  {
+    id: 'audit_03',
+    organizationId: 'org_byo_digital',
+    userId: 'user_journalist_1',
+    userName: 'Tariro Marange',
+    userRole: 'journalist',
+    action: 'AI_ARTICLE_ASSIST',
+    entityType: 'ai',
+    entityId: 'story_byo_002',
+    entityTitle: 'NUST AI Headline Generation',
+    details: 'Generated 5 headline alternatives and verified no uncorroborated quotes were generated.',
+    timestamp: '2026-11-02T09:45:00Z',
+  },
+  {
+    id: 'audit_04',
+    organizationId: 'org_byo_digital',
+    userId: 'user_org_admin',
+    userName: 'Thandeka Ndlovu',
+    userRole: 'org_admin',
+    action: 'CREATED_DEPARTMENT',
+    entityType: 'department',
+    entityId: 'dept_tech',
+    entityTitle: 'Technology & Innovation',
+    details: 'Configured new digital reporting department under ZMDTP pilot parameters.',
+    timestamp: '2026-10-20T14:30:00Z',
+  },
+  {
+    id: 'audit_05',
+    organizationId: 'org_byo_digital',
+    userId: 'user_producer',
+    userName: 'Bheki Khumalo',
+    userRole: 'multimedia_producer',
+    action: 'UPLOADED_MEDIA',
+    entityType: 'media',
+    entityId: 'media_02',
+    entityTitle: 'NUST_Predictive_Engine_Demo.mp4',
+    details: 'Uploaded 42.8MB video walkthrough and generated subtitle timestamps.',
+    timestamp: '2026-11-01T16:00:00Z',
+  },
+];
+
+export const INITIAL_TRANSCRIPTS: TranscriptItem[] = [
+  {
+    id: 'trans_01',
+    title: 'BCC Town Clerk on Western Suburbs Water Overhaul',
+    organizationId: 'org_byo_digital',
+    audioFileName: 'Town_Clerk_Interview_Luveve_Water.wav',
+    audioDuration: '14:20',
+    language: 'en',
+    content: `[00:00] Journalist (Lindiwe Moyo): Good morning Mr. Town Clerk. Could you outline what concrete progress has been achieved on the Luveve bypass pipeline this quarter?
+
+[00:18] Town Clerk (Mr. Christopher Dube): Good morning Lindiwe. We have completed acoustic leak testing across fourteen kilometres of newly laid ductile iron pipe. As you know, the asbestos network dating back to the late 1960s was registering non-revenue losses above forty-two percent.
+
+[01:05] Journalist: And what are the latest sensor readings registering today?
+
+[01:14] Town Clerk: The latest pressure logs indicate we have stabilized losses at twenty-six percent. We expect a further five percent gain once the Magwegwe pump station telemetry upgrade comes online next month.
+
+[02:00] Journalist: What is your response to residents who question if billing will reflect this efficiency?
+
+[02:15] Town Clerk: Billing adjustments are currently undergoing calibration with the financial directorate. Every drop conserved in the mains must translate directly into lower community surcharges.`,
+    summary: 'Town Clerk Christopher Dube confirms Luveve bypass pipeline reduces water loss from 42% to 26% across 14km of new ductile iron pipes. Further 5% gain expected with Magwegwe telemetry.',
+    createdByUserId: 'user_journalist_2',
+    createdByName: 'Lindiwe Moyo',
+    linkedStoryId: 'story_byo_003',
+    createdAt: '2026-11-01T13:00:00Z',
+  },
+  {
+    id: 'trans_02',
+    title: 'Intwasa Poetry & Digital Arts Dialogue (isiNdebele)',
+    organizationId: 'org_byo_digital',
+    audioFileName: 'Intwasa_Poet_Interview.mp3',
+    audioDuration: '08:45',
+    language: 'nd',
+    content: `[00:00] Intatheli: Salibonani mntakadadewethu Sithandazile. Ungasitshela kabanzi ngomsebenzi owethule namhlanje lapha eNational Gallery?
+
+[00:22] Sithandazile Dube: Yebo, ngiyabonga kakhulu. Leli lithuba elikhulu lokuthi sikhombise ukuthi ulimi lwesiNdebele luyaphila, alusiyo into ebekwe ethuneni. Inkondlo yami ikhuluma ngentsha yaseBulawayo ehlala phakathi kwemithetho yomnotho lokufuna impumelelo nge-digital media.
+
+[01:15] Intatheli: Abantu abasakhulayo bayaluthola yini usizo lokuthi balobe ngolimi lwesintu?
+
+[01:30] Sithandazile: Impela, uma sisebenzisa ubuciko obuhambisana le-AI lezobuchwepheshe besimanjemanje, abantwana bethu bazaziqhenya ngemvelaphi yabo.`,
+    summary: 'Renowned poet Sithandazile Dube highlights that isiNdebele is a living language thriving in modern digital spaces, encouraging youth to leverage tech and AI for indigenous literature.',
+    createdByUserId: 'user_journalist_2',
+    createdByName: 'Lindiwe Moyo',
+    linkedStoryId: 'story_byo_008',
+    createdAt: '2026-10-25T16:00:00Z',
+  },
+];
+
+export const INITIAL_TRANSLATIONS: TranslationItem[] = [
+  {
+    id: 'translat_01',
+    organizationId: 'org_byo_digital',
+    title: 'Bulawayo Water Pipeline Headline & Lead in isiNdebele',
+    sourceLang: 'en',
+    targetLang: 'nd',
+    contentType: 'headline',
+    originalText: 'Bulawayo Water Distribution: Egodini & Luveve Pipeline Rehabilitation Timeline Revealed. City engineers cut water losses from 42% down to 26%.',
+    translatedText: 'Ukusatshalaliswa Kwamanzi eBulawayo: Sekudalulwe Isikhathi Sokulungiswa Kwamaphayiphi Ase-Egodini leLuveve. Onjiniyela bedolobha behlise ukulahleka kwamanzi kusuka kumaphesenti angama-42 kusiya kumatshumi amabili lesithupha (26%).',
+    notes: 'Translated into formal Northern Ndebele register used by Bulawayo civic media.',
+    createdByUserId: 'user_journalist_2',
+    createdByName: 'Lindiwe Moyo',
+    linkedStoryId: 'story_byo_003',
+    createdAt: '2026-11-01T15:00:00Z',
+  },
+  {
+    id: 'translat_02',
+    organizationId: 'org_byo_digital',
+    title: 'Solar Mini-Grid Summary in Shona',
+    sourceLang: 'en',
+    targetLang: 'sn',
+    contentType: 'article',
+    originalText: 'Twelve rural health clinics in Matabeleland North have achieved 100% clean power using hybrid solar-storage mini-grids, ensuring uninterrupted vaccine refrigeration.',
+    translatedText: 'Makiriniki gumi nembiri ekumaruwa kuMatabeleland North awana magetsi ezuva (solar) akakwana zana kubva muzana (100%), zvichibatsira kuti majekiseni ekudzivirira zvirwere arambe achitonhorera pasina kumira.',
+    notes: 'Standard Shona health broadcast terminology verified.',
+    createdByUserId: 'user_journalist_1',
+    createdByName: 'Tariro Marange',
+    linkedStoryId: 'story_byo_004',
+    createdAt: '2026-10-31T12:00:00Z',
+  },
+];

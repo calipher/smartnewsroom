@@ -1,0 +1,1058 @@
+# MASTER DEVELOPMENT PROMPT: SMARTNEWSROOM ZIMBABWE
+
+## 1. PROJECT OVERVIEW
+
+Act as a senior full-stack software architect, UI/UX designer, AI engineer and product developer.
+
+Your task is to design and develop a fully functional, modern, responsive, AI-powered newsroom management and journalism assistance platform called:
+
+SMARTNEWSROOM ZIMBABWE
+
+Tagline: Transforming Newsrooms. Empowering Journalists. Innovating Zimbabwean Media.
+
+The platform is an initiative under the Zimbabwe Media Digital Transformation Programme (ZMDTP), proposed by the Computer Society of Zimbabwe (CSZ).
+
+The project will initially be piloted in Bulawayo, Zimbabwe, with the intention of scaling to media organisations throughout Zimbabwe.
+
+This must be a working software prototype, not a static website, presentation or dashboard mock-up.
+
+Build actual functional modules with working navigation, forms, authentication, data storage, CRUD operations, AI integrations, dashboards and role-based access controls.
+
+Do not simply describe what should be built. Implement the application.
+
+## 2. PROJECT VISION
+
+Develop an integrated digital newsroom platform that enables media organisations to manage their editorial operations while using Artificial Intelligence to improve journalism and multimedia content production.
+
+The system must combine two major products:
+
+A. SMARTNEWSROOM MANAGEMENT SYSTEM
+
+A digital platform for managing:
+- Media organisations.
+- Newsroom departments.
+- Journalists and editors.
+- Story assignments.
+- Editorial calendars.
+- News submissions.
+- Editorial reviews and approvals.
+- Multimedia content.
+- Publishing schedules.
+- Newsroom analytics.
+
+B. SMARTNEWSROOM AI ASSISTANT
+
+An AI-powered assistant for:
+- Interview transcription.
+- Article drafting assistance.
+- Article summarisation.
+- Headline generation.
+- Translation.
+- Interview question generation.
+- Social media content generation.
+- Video subtitles.
+- Content repurposing.
+- Research and document analysis.
+
+Both products must be integrated into one unified application.
+
+## 3. TARGET USERS
+
+The platform must support different types of media organisations:
+
+1. Radio stations.
+2. Television broadcasters.
+3. Newspaper publishers.
+4. Online news publishers.
+5. Community media organisations.
+6. Multimedia production organisations.
+
+The application must support multiple independent media organisations using the same platform.
+
+Each organisation must have its own workspace, users, stories, assignments, documents and multimedia library.
+
+One organisation must never access another organisation's private newsroom information.
+
+## 4. TECHNOLOGY STACK
+
+Use the following preferred technology stack:
+
+Frontend:
+- React.js.
+- TypeScript.
+- Tailwind CSS.
+- Modern component-based architecture.
+- Lucide icons.
+- Responsive design.
+
+Backend:
+- Firebase Authentication.
+- Cloud Firestore.
+- Firebase Storage.
+- Firebase Cloud Functions or secure server-side API endpoints where appropriate.
+
+Artificial Intelligence:
+- Google Gemini API.
+- Use the currently supported Gemini model available in the environment.
+- Keep model configuration centralised so it can be changed without rewriting the application.
+
+Other requirements:
+- Progressive Web App (PWA).
+- Mobile-first responsive interface.
+- Secure REST API architecture where needed.
+- Modular application structure.
+- Environment variables for credentials.
+- Error handling and loading states.
+- Form validation.
+- Search, sorting and filtering.
+
+IMPORTANT SECURITY REQUIREMENT:
+
+Never expose Gemini API keys, Firebase administrative credentials or other secrets in frontend source code.
+
+Use server-side functions for AI requests requiring protected credentials.
+
+If Firebase or other external services are not configured, provide a working demo mode using seeded data and local persistence where appropriate. Clearly distinguish demo mode from production mode.
+
+Do not simulate successful cloud operations when no backend connection exists.
+
+## 5. USER ROLES AND PERMISSIONS
+
+Implement role-based access control.
+
+### Platform Administrator
+
+Can:
+- Create and manage media organisations.
+- Activate or suspend organisations.
+- Create organisation administrators.
+- View platform-level statistics.
+- Manage system configurations.
+- Manage subscription or licensing settings.
+- View platform audit logs.
+- Manage AI feature availability.
+
+### Organisation Administrator
+
+Can:
+- Manage the organisation profile.
+- Create and manage newsroom departments.
+- Register users.
+- Assign roles and permissions.
+- Configure newsroom settings.
+- View organisation-wide analytics.
+- Manage storage and content policies.
+
+### Editor-in-Chief
+
+Can:
+- View all newsroom submissions.
+- Assign stories.
+- Review submitted stories.
+- Approve or reject articles.
+- Request revisions.
+- Schedule approved content.
+- Manage the editorial calendar.
+- Monitor journalist performance.
+
+### Section Editor
+
+Can:
+- Manage assigned departments.
+- Assign stories to journalists.
+- Review submissions.
+- Request corrections.
+- Approve stories within authorised permissions.
+
+### Journalist / Reporter
+
+Can:
+- View assigned stories.
+- Submit story proposals.
+- Write and edit articles.
+- Upload interviews and supporting documents.
+- Use AI assistance.
+- Submit articles for editorial review.
+- View feedback from editors.
+- Track story progress.
+
+### Producer / Multimedia Editor
+
+Can:
+- Upload audio and video.
+- Manage multimedia assets.
+- Transcribe interviews.
+- Generate subtitles.
+- Prepare multimedia content.
+- Associate media files with stories.
+
+### Viewer / Read-only User
+
+Can:
+- View authorised newsroom information.
+- Access published internal reports.
+- View permitted content without editing.
+
+Enforce permissions in the backend, not merely by hiding frontend buttons.
+
+## 6. MAIN APPLICATION LAYOUT
+
+Create a professional application interface.
+
+The desktop layout should have:
+
+LEFT SIDEBAR:
+- Dashboard.
+- Newsroom.
+- My Assignments.
+- Story Management.
+- Editorial Calendar.
+- AI Assistant.
+- Transcription Studio.
+- Translation Studio.
+- Multimedia Library.
+- Publishing Centre.
+- Analytics and Reports.
+- User Management.
+- Organisation Settings.
+
+TOP NAVIGATION:
+- Organisation logo and name.
+- Global search.
+- Notifications.
+- Help and support.
+- User profile.
+- Current date.
+
+MAIN CONTENT:
+- Dashboard cards.
+- Data tables.
+- Forms.
+- Content editors.
+- Charts.
+- Activity feeds.
+- Workflow indicators.
+
+On mobile devices, implement a responsive navigation drawer or bottom navigation where appropriate.
+
+## 7. MODULE ONE: PLATFORM DASHBOARD
+
+Create a dashboard that changes according to the logged-in user's role.
+
+For the organisation administrator and Editor-in-Chief, display:
+
+- Total stories.
+- Draft stories.
+- Stories awaiting review.
+- Approved stories.
+- Published stories.
+- Overdue assignments.
+- Active journalists.
+- Upcoming editorial deadlines.
+
+Include:
+- Stories by status chart.
+- Stories by department chart.
+- Weekly newsroom activity chart.
+- Recent submissions.
+- Upcoming deadlines.
+- Latest newsroom activity.
+
+For journalists, display:
+- My assignments.
+- Pending submissions.
+- Approved articles.
+- Revision requests.
+- Upcoming deadlines.
+- Recent editor feedback.
+
+All dashboard figures must come from actual stored data.
+
+## 8. MODULE TWO: NEWSROOM MANAGEMENT
+
+Create a newsroom management system.
+
+Allow organisation administrators to create departments such as:
+
+- News.
+- Politics.
+- Business.
+- Sports.
+- Entertainment.
+- Education.
+- Technology.
+- Health.
+- Investigations.
+- Community Affairs.
+- Multimedia.
+
+Each department should have a department head and assigned members.
+
+Implement:
+
+- Department creation.
+- Department editing.
+- Member allocation.
+- Department-level story tracking.
+- Department performance reports.
+
+## 9. MODULE THREE: STORY AND ASSIGNMENT MANAGEMENT
+
+This is one of the most important modules.
+
+Allow editors to create and assign stories.
+
+Story fields must include:
+
+- Story title.
+- Story description.
+- Story category.
+- Assigned journalist.
+- Assigned editor.
+- Department.
+- Priority.
+- Deadline.
+- Proposed publication date.
+- Story format.
+- Supporting documents.
+- Editorial instructions.
+- Status.
+
+Story formats:
+- News article.
+- Radio bulletin.
+- Television report.
+- Feature article.
+- Interview.
+- Investigative report.
+- Opinion piece.
+- Podcast.
+- Multimedia story.
+
+Story statuses:
+
+- Proposed.
+- Assigned.
+- In Progress.
+- Submitted.
+- Under Review.
+- Revision Required.
+- Approved.
+- Scheduled.
+- Published.
+- Archived.
+
+Implement a complete workflow.
+
+EDITOR CREATES STORY
+→ ASSIGNS JOURNALIST
+→ JOURNALIST WORKS ON STORY
+→ JOURNALIST SUBMITS STORY
+→ EDITOR REVIEWS STORY
+→ EDITOR APPROVES OR REQUESTS REVISION
+→ APPROVED STORY IS SCHEDULED
+→ EDITOR OR AUTHORISED PUBLISHER MARKS STORY AS PUBLISHED.
+
+The system must record the user, action and timestamp for every important workflow transition.
+
+Include a Kanban board with columns representing story statuses.
+
+Also provide a searchable and filterable table view.
+
+## 10. MODULE FOUR: ARTICLE EDITOR
+
+Develop a professional article editor.
+
+Features:
+
+- Rich text editing.
+- Article title.
+- Article body.
+- Article summary.
+- Category selection.
+- Featured image upload.
+- Supporting documents.
+- Word count.
+- Autosave.
+- Draft saving.
+- Submission for review.
+- Version history.
+- Editorial comments.
+
+Allow journalists to open the AI assistant directly from the article editor.
+
+The AI must be able to assist with the selected article without automatically overwriting the journalist's original work.
+
+## 11. MODULE FIVE: SMARTNEWSROOM AI ASSISTANT
+
+This is a flagship feature.
+
+Build a dedicated AI workspace powered by Google Gemini.
+
+Create a conversational interface with a prompt input and output panel.
+
+Include the following tools.
+
+### A. AI Article Assistant
+
+The user provides a topic, notes or source material.
+
+AI capabilities:
+- Develop an article outline.
+- Draft a news article.
+- Improve grammar.
+- Improve readability.
+- Summarise an article.
+- Rewrite a headline.
+- Suggest alternative headlines.
+- Identify missing information.
+- Generate follow-up interview questions.
+
+Provide tone options:
+- Professional news reporting.
+- Investigative journalism.
+- Feature writing.
+- Broadcast news.
+- Community reporting.
+
+IMPORTANT: The AI must not invent quotes, sources, events or factual claims. Clearly identify missing facts and information requiring independent verification.
+
+### B. Headline Generator
+
+Allow the journalist to paste an article and generate:
+
+- Five headline options.
+- Short headline.
+- SEO headline.
+- Social media headline.
+- Radio bulletin headline.
+
+### C. Interview Question Generator
+
+Allow the journalist to enter:
+- Interview subject.
+- Topic.
+- Purpose.
+- Target audience.
+
+Generate relevant interview questions, including introductory, investigative and follow-up questions.
+
+### D. Article Summariser
+
+Allow users to paste text or upload supported documents.
+
+Generate:
+- Short summary.
+- Detailed summary.
+- Key points.
+- Important names and dates.
+- Potential follow-up questions.
+
+### E. Social Media Content Generator
+
+Convert an article into:
+
+- Facebook post.
+- X post.
+- LinkedIn post.
+- WhatsApp news update.
+- Instagram caption.
+- Short video script.
+
+Allow different content lengths.
+
+### F. Research Assistant
+
+Allow users to upload documents or paste source material.
+
+AI should:
+- Summarise documents.
+- Extract key findings.
+- Identify relevant dates.
+- Identify key individuals and organisations.
+- Suggest additional questions for investigation.
+
+Do not present generated information as independently verified facts.
+
+## 12. MODULE SIX: TRANSCRIPTION STUDIO
+
+Develop an audio transcription workspace.
+
+The user should be able to:
+
+1. Upload audio files.
+2. Select the language.
+3. Enter a description or interview title.
+4. Start transcription.
+5. View transcription progress.
+6. Display the resulting transcript.
+7. Edit the transcript.
+8. Download the transcript.
+9. Save the transcript to the multimedia library.
+10. Convert the transcript into a news article using the AI assistant.
+
+Support common audio formats where technically possible, including MP3, WAV and M4A.
+
+Use Gemini's supported audio processing capabilities or a suitable speech-to-text integration.
+
+For large files, implement appropriate file-size limits and a secure upload and processing workflow.
+
+Include a clear error message if transcription cannot be completed.
+
+### Supported language options
+
+- English.
+- isiNdebele.
+- Shona.
+- Other languages where supported by the selected transcription engine.
+
+Do not claim perfect transcription accuracy for Zimbabwean languages. Allow journalists to correct transcripts manually.
+
+## 13. MODULE SEVEN: TRANSLATION STUDIO
+
+Develop a translation interface.
+
+Users should be able to enter text or upload supported documents.
+
+Translation options:
+
+- English to isiNdebele.
+- English to Shona.
+- isiNdebele to English.
+- Shona to English.
+- English to other supported languages.
+
+Allow:
+- Text translation.
+- Headline translation.
+- Article translation.
+- Social media translation.
+- Broadcast script translation.
+
+Provide original and translated text side by side.
+
+Include a manual editing facility.
+
+Where language models are not sufficiently accurate, display a notice recommending human language review before publication.
+
+## 14. MODULE EIGHT: MULTIMEDIA LIBRARY
+
+Create a centralised digital media library.
+
+Support:
+- Images.
+- Audio.
+- Video.
+- Documents.
+- Interview recordings.
+- Graphics.
+- Subtitles.
+- Published content.
+
+Each asset must contain:
+
+- File name.
+- File type.
+- Description.
+- Upload date.
+- Uploaded by.
+- Associated story.
+- Department.
+- Tags.
+
+Implement:
+- File previews where supported.
+- Search.
+- Filtering.
+- Downloading.
+- Uploading.
+- File categorisation.
+- Permission-based access.
+
+Use Firebase Storage for configured production deployments.
+
+## 15. MODULE NINE: EDITORIAL CALENDAR
+
+Develop a visual editorial calendar.
+
+Provide:
+
+- Monthly view.
+- Weekly view.
+- Daily view.
+- Story deadlines.
+- Scheduled publications.
+- Editorial meetings.
+- Special events.
+
+Allow editors to create and update calendar entries.
+
+Use colour-coded statuses.
+
+Users should be able to filter the calendar by department and assigned journalist.
+
+## 16. MODULE TEN: PUBLISHING CENTRE
+
+Develop a central publishing management interface.
+
+Features:
+
+- Approved stories.
+- Scheduled stories.
+- Published stories.
+- Publication history.
+- Publication destination.
+- Publication date and time.
+- Publishing status.
+
+Publication destinations may include:
+
+- Website.
+- Radio bulletin.
+- Television broadcast.
+- Facebook.
+- X.
+- WhatsApp.
+- Newsletter.
+
+For the prototype, implement internal publishing status management and a simulated publishing preview.
+
+Do not claim that the application can publish directly to external social media accounts unless the relevant official APIs and authentication have been configured.
+
+Include a WordPress integration architecture for future website publishing.
+
+Only authorised editors should be able to mark content as published.
+
+## 17. MODULE ELEVEN: ANALYTICS AND REPORTS
+
+Develop a newsroom analytics dashboard.
+
+Display:
+
+- Total stories processed.
+- Stories by category.
+- Stories by department.
+- Journalist assignments.
+- Story turnaround times.
+- Editorial approval rates.
+- Overdue assignments.
+- AI tool usage.
+- Transcription activity.
+- Translation activity.
+- Publication statistics.
+
+Provide:
+- Date filters.
+- Department filters.
+- Exportable reports.
+- Charts.
+- CSV export.
+
+Use actual stored data rather than hardcoded dashboard statistics.
+
+## 18. MODULE TWELVE: NOTIFICATIONS
+
+Implement an in-app notification system.
+
+Notify users when:
+
+- A story is assigned.
+- A deadline is approaching.
+- A story is submitted.
+- An editor requests revisions.
+- A story is approved.
+- A story is rejected.
+- A publication is scheduled.
+- A user receives an editorial comment.
+
+Include notification history and read/unread status.
+
+## 19. MODULE THIRTEEN: USER AND ORGANISATION MANAGEMENT
+
+Develop administration pages for:
+
+- Organisation registration.
+- Organisation profile.
+- Logo upload.
+- User registration.
+- User invitations.
+- User role management.
+- Department management.
+- Account activation and suspension.
+- Permission management.
+
+Organisation registration fields:
+
+- Organisation name.
+- Organisation type.
+- Physical address.
+- Province.
+- Contact email.
+- Telephone number.
+- Website.
+- Logo.
+- Organisation administrator.
+
+Allow the platform administrator to approve new organisation registrations.
+
+## 20. MODULE FOURTEEN: SECURITY AND AUDIT TRAIL
+
+Security is a critical requirement because the platform will handle unpublished news stories, confidential information and potentially sensitive sources.
+
+Implement:
+
+- Authentication.
+- Role-based permissions.
+- Organisation-level data isolation.
+- Secure file access.
+- Server-side AI API calls.
+- Input validation.
+- Audit logging.
+- Secure session handling.
+- Protected administrative routes.
+
+Never expose one organisation's stories or files to another organisation.
+
+Do not use confidential newsroom material to train external AI models.
+
+Where AI processing involves third-party services, clearly disclose the relevant data processing arrangements and allow organisations to control which content can be submitted to AI.
+
+Include a warning when journalists upload confidential or sensitive information.
+
+## 21. MODULE FIFTEEN: DEMO MODE AND SAMPLE DATA
+
+The prototype must be immediately demonstrable without requiring real media organisations to register first.
+
+Create a DEMO MODE with realistic sample data.
+
+Use fictional demonstration organisations, including:
+
+1. Bulawayo Digital Media.
+2. Zimbabwe Community Radio.
+3. National News Publishers.
+
+Create sample users representing:
+
+- Platform administrator.
+- Organisation administrator.
+- Editor-in-Chief.
+- Section editor.
+- Journalist.
+- Multimedia producer.
+
+Seed the application with:
+- Sample departments.
+- At least 15 sample news stories.
+- Sample assignments.
+- Editorial calendar entries.
+- Sample AI-generated content.
+- Sample notifications.
+- Sample analytics data.
+
+Create a visible DEMO MODE indicator.
+
+Provide a convenient demo role selector for demonstrating the different permission levels. Restrict this feature to demo environments.
+
+Ensure demo data is clearly labelled and never represented as real published news.
+
+## 22. USER INTERFACE AND VISUAL IDENTITY
+
+Design a modern, professional newsroom application.
+
+The design must communicate:
+- Professional journalism.
+- Technological innovation.
+- Trust.
+- Efficiency.
+- Editorial professionalism.
+
+Suggested colour palette:
+
+- Deep navy: #14243A.
+- Teal: #0D9488.
+- White: #FFFFFF.
+- Light grey: #F3F5F7.
+- Dark text: #1F2937.
+
+Use:
+- Modern typography.
+- Clean dashboards.
+- Well-structured data tables.
+- Consistent spacing.
+- Professional charts.
+- Clear status badges.
+- Responsive cards.
+- Intuitive navigation.
+
+Avoid excessive gradients, unnecessary animations and generic template styling.
+
+The application should look like a professional enterprise newsroom management product.
+
+Create a simple SmartNewsroom Zimbabwe logo using typography and a suitable abstract media/technology symbol.
+
+## 23. LOCALISATION AND ZIMBABWE CONTEXT
+
+Configure the application for Zimbabwe.
+
+Requirements:
+
+- Default timezone: Africa/Harare.
+- Date format: DD/MM/YYYY.
+- Default interface language: English.
+- Support for isiNdebele and Shona content workflows.
+- Optional USD and ZWG currency display for future subscription and billing modules.
+- Zimbabwean provinces and cities in organisation registration.
+- Appropriate phone number input for Zimbabwe.
+- Lightweight pages for limited internet connectivity.
+
+The system should be usable by media organisations with different levels of internet connectivity.
+
+## 24. DATABASE ARCHITECTURE
+
+Design a scalable database structure.
+
+Suggested Firestore collections:
+
+organisations
+users
+departments
+stories
+assignments
+editorial_comments
+editorial_calendar
+media_assets
+transcripts
+translations
+ai_generations
+notifications
+audit_logs
+publishing_records
+organisation_settings
+platform_settings
+
+Every organisation-owned record must include an organisation ID.
+
+Apply Firestore security rules to ensure that users only access information permitted by their role and organisation.
+
+Design indexes for common queries, including:
+- Stories by organisation.
+- Stories by status.
+- Stories by journalist.
+- Stories by department.
+- Stories by deadline.
+- Notifications by user.
+- Media assets by organisation.
+
+Implement timestamps for creation and updates.
+
+## 25. APPLICATION ARCHITECTURE
+
+Use a modular architecture.
+
+Suggested project structure:
+
+src/
+  components/
+    layout/
+    dashboard/
+    newsroom/
+    stories/
+    editor/
+    ai/
+    transcription/
+    translation/
+    multimedia/
+    calendar/
+    analytics/
+    notifications/
+    admin/
+
+  pages/
+    Dashboard/
+    Newsroom/
+    Assignments/
+    Stories/
+    AIStudio/
+    TranscriptionStudio/
+    TranslationStudio/
+    MediaLibrary/
+    EditorialCalendar/
+    PublishingCentre/
+    Analytics/
+    Settings/
+
+  services/
+    firebase/
+    gemini/
+    stories/
+    users/
+    media/
+    notifications/
+
+  hooks/
+  contexts/
+  types/
+  utils/
+  routes/
+
+functions/
+  src/
+    ai/
+    transcription/
+    publishing/
+    security/
+
+public/
+  assets/
+
+Use reusable components and maintain separation between UI, application logic, database access and external services.
+
+## 26. IMPLEMENTATION REQUIREMENTS
+
+Develop the application in logical stages.
+
+STAGE 1:
+- Create project structure.
+- Build the interface and navigation.
+- Implement authentication.
+- Implement role-based dashboards.
+- Implement organisation management.
+
+STAGE 2:
+- Implement departments.
+- Implement story management.
+- Implement assignments.
+- Implement editorial workflows.
+- Implement calendar.
+
+STAGE 3:
+- Implement Gemini integration.
+- Build AI journalism assistant.
+- Implement article drafting.
+- Implement summarisation.
+- Implement headline generation.
+- Implement social media content generation.
+
+STAGE 4:
+- Implement transcription.
+- Implement translation.
+- Implement multimedia library.
+
+STAGE 5:
+- Implement publishing centre.
+- Implement analytics.
+- Implement notifications.
+- Implement audit logs.
+
+STAGE 6:
+- Implement demo mode.
+- Implement Firebase persistence.
+- Implement security rules.
+- Test all workflows.
+- Optimise mobile responsiveness.
+- Prepare deployment documentation.
+
+Do not stop after generating the landing page or dashboard.
+
+Continue implementing the actual application modules.
+
+If the development environment cannot complete every module in one generation, prioritise a fully functional core workflow and then continue with the remaining modules in subsequent development iterations.
+
+## 27. ACCEPTANCE TESTS
+
+The prototype will only be considered functional when the following scenarios work:
+
+TEST 1:
+A platform administrator creates a new media organisation.
+
+TEST 2:
+The organisation administrator creates departments and registers journalists.
+
+TEST 3:
+An editor creates a story assignment and assigns it to a journalist.
+
+TEST 4:
+The journalist logs in, views the assignment and prepares an article.
+
+TEST 5:
+The journalist uses SmartNewsroom AI to improve the article and generate headlines.
+
+TEST 6:
+The journalist submits the article for editorial review.
+
+TEST 7:
+The editor reviews the article and requests revisions.
+
+TEST 8:
+The journalist makes corrections and resubmits.
+
+TEST 9:
+The editor approves and schedules the story.
+
+TEST 10:
+An authorised user marks the story as published.
+
+TEST 11:
+A journalist uploads an interview and generates a transcript.
+
+TEST 12:
+A journalist translates a story into isiNdebele or Shona.
+
+TEST 13:
+The organisation administrator views newsroom analytics.
+
+TEST 14:
+Users from another organisation cannot access the first organisation's private stories or media files.
+
+TEST 15:
+All important activities appear in the audit log.
+
+TEST 16:
+The application works on desktop, tablet and mobile.
+
+## 28. DEPLOYMENT
+
+Prepare the application for deployment using suitable Google Cloud and Firebase infrastructure.
+
+Provide:
+- Environment variable configuration.
+- Firebase project setup instructions.
+- Firestore security rules.
+- Storage security rules.
+- Cloud Functions deployment instructions.
+- Gemini API configuration.
+- Build and deployment instructions.
+- PWA configuration.
+- Administrator setup guide.
+- User documentation.
+
+Use environment variables and secure server-side configuration.
+
+Provide clear instructions for setting up a production environment separately from demo mode.
+
+## 29. FINAL DEVELOPMENT INSTRUCTIONS
+
+Before completing the development:
+
+1. Verify that the application starts successfully.
+2. Fix TypeScript errors.
+3. Fix missing dependencies.
+4. Fix broken imports.
+5. Test navigation.
+6. Test all forms.
+7. Test CRUD operations.
+8. Test the AI assistant.
+9. Test role-based permissions.
+10. Test organisation-level data isolation.
+11. Test responsive layouts.
+12. Verify the demo experience.
+
+Do not leave buttons that appear functional but do nothing.
+
+If a feature depends on an external API that has not been configured, provide a clear setup requirement and an informative error state rather than presenting fake results.
+
+Deliver a working, modular, scalable prototype that can be demonstrated to the Computer Society of Zimbabwe, media organisations, technology partners and potential funders.
+
+The ultimate goal is to create a practical digital transformation platform that addresses the actual technological challenges facing Zimbabwean media organisations.
+
+BEGIN BUILDING THE APPLICATION NOW.
